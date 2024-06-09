@@ -12,6 +12,7 @@ import java.util.List;
 @Data
 public class TouristCompanyDto {
     private Long branchId;
+
     @NotEmpty(message = "Branch name cannot be empty")
     private String branchName;
 
