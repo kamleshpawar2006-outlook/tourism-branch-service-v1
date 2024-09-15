@@ -1,17 +1,19 @@
-package com.tm.company_service.service.serviceImpl;
+package com.tm.service.serviceImpl;
 
-import com.tm.company_service.dto.TariffDto;
-import com.tm.company_service.dto.TouristCompanyDto;
-import com.tm.company_service.entity.Tariff;
-import com.tm.company_service.entity.TouristCompany;
-import com.tm.company_service.exception.CustomException;
-import com.tm.company_service.repository.TariffRepository;
-import com.tm.company_service.repository.TouristCompanyRepository;
-import com.tm.company_service.service.TariffService;
-import com.tm.company_service.service.TouristCompanyService;
+import com.tm.dto.TariffDto;
+import com.tm.dto.TouristCompanyDto;
+import com.tm.dto.TouristCompanyEvent;
+import com.tm.entity.Tariff;
+import com.tm.entity.TouristCompany;
+import com.tm.exception.CustomException;
+import com.tm.repository.TariffRepository;
+import com.tm.repository.TouristCompanyRepository;
+import com.tm.service.TariffService;
+import com.tm.service.TouristCompanyService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -29,12 +31,20 @@ public class TouristCompanyServiceImpl implements TouristCompanyService {
     private TariffRepository tariffRepository;
 
     @Autowired
+    private KafkaTemplate<String, Object> kafkaTemplate;
+
+    @Autowired
     private TariffService tariffService;
 
     @Override
     @Transactional
     public Map<String, Long> addTouristCompany(TouristCompanyDto companyDTO) throws CustomException {
         TouristCompany company = convertToEntity(companyDTO);
+
+        if(!companyDTO.getTariffs().stream().allMatch(TariffDto::isTariffAmountValid)) {
+            throw new CustomException("Tariff amount should be between 50000 and 100000");
+        }
+
         if(company.getTariffs().size() > 0) {
             for (Tariff tariff : company.getTariffs()) {
                 tariff.setTouristCompany(company);
@@ -47,6 +57,10 @@ public class TouristCompanyServiceImpl implements TouristCompanyService {
             TouristCompany savedCompany = touristCompanyRepository.save(company);
             Map<String, Long> response = new HashMap<>();
             response.put("branchId", savedCompany.getBranchId());
+            /* Send event to Kafka */
+
+            TouristCompanyEvent event = new TouristCompanyEvent("AddTourismCompany", savedCompany);
+            kafkaTemplate.send("tourist-company-topic", event);
             return response;
         } catch (DataIntegrityViolationException ex) {
             throw new CustomException("Duplicate place(s) found");
@@ -63,6 +77,7 @@ public class TouristCompanyServiceImpl implements TouristCompanyService {
         company.getTariffs().clear();
         company.getTariffs().addAll(updatedTariffs);
         TouristCompany updatedCompany = touristCompanyRepository.save(company);
+        kafkaTemplate.send("tourist-company-topic", new TouristCompanyEvent("UpdateTariff", updatedCompany));
         return convertToDTO(updatedCompany);
     }
 

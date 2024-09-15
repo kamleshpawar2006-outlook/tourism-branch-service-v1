@@ -1,10 +1,10 @@
-package com.tm.company_service.service.serviceImpl;
+package com.tm.service.serviceImpl;
 
-import com.tm.company_service.dto.TariffDto;
-import com.tm.company_service.entity.Tariff;
-import com.tm.company_service.entity.TouristCompany;
-import com.tm.company_service.repository.TariffRepository;
-import com.tm.company_service.service.TariffService;
+import com.tm.dto.TariffDto;
+import com.tm.entity.Tariff;
+import com.tm.entity.TouristCompany;
+import com.tm.repository.TariffRepository;
+import com.tm.service.TariffService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

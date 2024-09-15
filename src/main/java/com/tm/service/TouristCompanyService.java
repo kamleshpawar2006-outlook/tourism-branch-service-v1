@@ -1,7 +1,7 @@
-package com.tm.company_service.service;
+package com.tm.service;
 
-import com.tm.company_service.dto.TariffDto;
-import com.tm.company_service.dto.TouristCompanyDto;
+import com.tm.dto.TariffDto;
+import com.tm.dto.TouristCompanyDto;
 import org.springframework.validation.annotation.Validated;
 
 import java.util.List;

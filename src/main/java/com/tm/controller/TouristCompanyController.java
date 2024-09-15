@@ -1,8 +1,8 @@
-package com.tm.company_service.controller;
+package com.tm.controller;
 
-import com.tm.company_service.dto.TariffDto;
-import com.tm.company_service.dto.TouristCompanyDto;
-import com.tm.company_service.service.TouristCompanyService;
+import com.tm.dto.TariffDto;
+import com.tm.dto.TouristCompanyDto;
+import com.tm.service.TouristCompanyService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;

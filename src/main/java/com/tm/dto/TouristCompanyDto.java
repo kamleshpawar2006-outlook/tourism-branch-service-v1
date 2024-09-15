@@ -1,4 +1,4 @@
-package com.tm.company_service.dto;
+package com.tm.dto;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;

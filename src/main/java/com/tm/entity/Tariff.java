@@ -1,5 +1,6 @@
-package com.tm.company_service.entity;
+package com.tm.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,10 +16,11 @@ public class Tariff {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long tariffId;
     private String place;
-    private int tariffAmount;
+    private String tariffAmount;
 
     @ManyToOne
     @JoinColumn(name = "branchId", nullable = false)
+    @JsonBackReference
     private TouristCompany touristCompany;
 
     @Override

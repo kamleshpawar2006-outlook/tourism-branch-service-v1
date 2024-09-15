@@ -1,4 +1,4 @@
-package com.tm.company_service.exception;
+package com.tm.exception;
 
 public class CustomException extends RuntimeException {
     public CustomException(String message) {

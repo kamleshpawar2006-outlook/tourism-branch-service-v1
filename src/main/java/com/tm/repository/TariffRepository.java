@@ -1,6 +1,6 @@
-package com.tm.company_service.repository;
+package com.tm.repository;
 
-import com.tm.company_service.entity.Tariff;
+import com.tm.entity.Tariff;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
