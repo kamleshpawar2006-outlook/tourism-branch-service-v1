@@ -15,7 +15,6 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/tourism/api/v1/branch")
-@Validated
 public class TouristCompanyController {
     @Autowired
     private TouristCompanyService touristCompanyService;
