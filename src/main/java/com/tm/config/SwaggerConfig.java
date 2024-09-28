@@ -14,6 +14,6 @@ public class SwaggerConfig {
                 .info(new Info()
                         .title("Tourism Management API")
                         .version("1.0")
-                        .description("API documentation for the Tourism Management - Search microservices"));
+                        .description("API documentation for the Tourism Management - Company Microservices"));
     }
 }

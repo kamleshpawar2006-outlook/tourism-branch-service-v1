@@ -20,5 +20,10 @@ public class WebConfig implements WebMvcConfigurer {
 //                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
 //                .allowedHeaders("*")
 //                .allowCredentials(false);
+//        registry.addMapping("/tourism/api/v1/branch/**")
+//                .allowedOrigins("http://localhost:4200,http://localhost:9102")
+//                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+//                .allowedHeaders("*")
+//                .allowCredentials(true);
     }
 }
